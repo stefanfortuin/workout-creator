@@ -1,0 +1,16 @@
+{
+	"name": "@stefanfortuin/workout-creator",
+	"version": "0.1.0",
+	"description": "A workout creator for mrc or erg file formats",
+	"license": "MIT",
+	"repository": "stefanfortuin/workout-creator",
+	"main": "index.js",
+	"keywords": [
+		"workout",
+		"mrc",
+		"erg",
+		"wahoo",
+		"plan"
+	]
+
+}
