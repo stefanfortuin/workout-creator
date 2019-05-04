@@ -1,27 +1,41 @@
 class SEGMENT{
-	constructor(start, duration, amount){
-		this._start = start; //start time in min.sec
+	constructor(duration, amount){
 		this._duration = duration; //time in seconds
 		this._amount = amount; //amount of percentage above ftp
 	}
 
-	startToSeconds(){
-		let seconds = this._start.substring(0,1) * 60 + Math.floor(this._start.substring(3,4) / 1.67);
-		return seconds;
+	get duration(){
+		return this._duration;
 	}
 
-	endTime(){
-		let end_time = this.startToSeconds() + this._duration;
-		console.log(end_time);
-		let min = Math.floor(end_time / 60);
-		let sec = end_time - min * 60;
+	get endTime(){
+		return this._start + this._duration;
+	}
+
+	set start(seconds){
+		this._start = seconds;
+	}
+
+	start_format(){
+		return this.seconds_to_file_format(this._start);
+	}
+
+	end_format(){
+		let end_time = this._start + this._duration;
+		return this.seconds_to_file_format(end_time);
+	}
+
+	seconds_to_file_format(seconds){
+		let min = Math.floor(seconds / 60);
+		let sec = seconds - min * 60;
+		sec = (sec > 9) ? "" + sec : "0" + sec;
 		return min + "." + sec;
 	}
 
 	toString(){
 		let output = "";
-		output += this._start + " " + this._amount + "\n";
-		output += this.endTime() + " " + this._amount + "\n";
+		output += this.start_format() + " " + this._amount + "\n";
+		output += this.end_format() + " " + this._amount + "\n";
 		return output;
 	}
 }

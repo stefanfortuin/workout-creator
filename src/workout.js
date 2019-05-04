@@ -8,6 +8,12 @@ class WORKOUT{
 		this._segments = [];
 	}
 
+	totalSeconds(){
+		return this._segments.reduce((t, s) => {
+			return t += s.duration;
+		}, 0)
+	}
+
 	addSegment(segment){
 		this._segments.push(segment)
 	}
@@ -36,11 +42,25 @@ class WORKOUT{
 		output += data_columns;
 		output += "[END COURSE HEADER] \n";
 		output += "[COURSE DATA] \n";
-		for (let i = 0; i < this._segments.length; i++) {
-			const s = this._segments[i];
-			output += s.toString();
-		}
+		output += this.segmentString();
 		output += "[END COURSE DATA]"
+		return output;
+	}
+
+	segmentString(){
+		let output = "";
+		for (let i = 0; i < this._segments.length; i++) {
+			const current = this._segments[i];
+			const previous = this._segments[i-1];
+			let start;
+			
+			(!previous || i == 0)
+			? start = 0 
+			: start = previous.endTime;
+
+			current.start = start;
+			output += current.toString();
+		}
 		return output;
 	}
 }
