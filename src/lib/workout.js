@@ -1,4 +1,4 @@
-class WORKOUT{
+class Workout{
 	constructor(options){
 		if (!options.type) {
 			console.log("Please specifiy a type, mrc/erg");
@@ -74,4 +74,4 @@ class WORKOUT{
 		return output;
 	}
 }
-module.exports = WORKOUT;
+export default Workout;

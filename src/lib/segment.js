@@ -1,4 +1,4 @@
-class SEGMENT{
+class Segment{
 	constructor(duration, amount){
 		this._duration = duration; //time in seconds
 		this._amount = amount; //amount of percentage above ftp
@@ -39,4 +39,4 @@ class SEGMENT{
 		return output;
 	}
 }
-module.exports = SEGMENT;
+export default Segment;
