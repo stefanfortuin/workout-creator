@@ -29,7 +29,7 @@ class SEGMENT{
 		let min = Math.floor(seconds / 60);
 		let sec = seconds - min * 60;
 		sec = (sec > 9) ? "" + sec : "0" + sec;
-		return min + "." + sec;
+		return min + "." + Math.round(sec * 1.666667);
 	}
 
 	toString(){
@@ -39,5 +39,4 @@ class SEGMENT{
 		return output;
 	}
 }
-
 module.exports = SEGMENT;

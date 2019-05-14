@@ -1,9 +1,19 @@
 class WORKOUT{
 	constructor(options){
+		if (!options.type) {
+			console.log("Please specifiy a type, mrc/erg");
+			return;
+		}
+
+		this._type = options.type;
 		this._version = (options.version) ? options.version : 2;
 		this._units = "ENGLISH";
 		this._description = options.description;
 		this._name = options.name;
+
+		this._data_columns = (this._type == "mrc") 
+		? "MINUTES PERCENT \n" 
+		: "MINUTES WATTS \n";
 
 		this._segments = [];
 	}
@@ -32,28 +42,28 @@ class WORKOUT{
 		return this._segments.find(segment);
 	}
 
-	toString(file_name, data_columns){
+	toString(){
 		let output = "";
 		output += "[COURSE HEADER] \n";
 		output += "UNITS=ENGLISH \n";
 		output += "VERSION=" + this._version + "\n";
 		output += "DESCRIPTION=" + this._description + "\n";
-		output += "FILE NAME=" + file_name + "\n";
-		output += data_columns;
+		output += "FILE NAME=" + this._name + "\n";
+		output += this._data_columns;
 		output += "[END COURSE HEADER] \n";
 		output += "[COURSE DATA] \n";
-		output += this.segmentString();
+		output += this.segmentsToString();
 		output += "[END COURSE DATA]"
 		return output;
 	}
 
-	segmentString(){
+	segmentsToString(){
 		let output = "";
 		for (let i = 0; i < this._segments.length; i++) {
 			const current = this._segments[i];
 			const previous = this._segments[i-1];
 			let start;
-			
+
 			(!previous || i == 0)
 			? start = 0 
 			: start = previous.endTime;
@@ -64,5 +74,4 @@ class WORKOUT{
 		return output;
 	}
 }
-
 module.exports = WORKOUT;

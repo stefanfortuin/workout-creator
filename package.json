@@ -1,16 +1,27 @@
 {
 	"name": "@stefanfortuin/workout-creator",
-	"version": "0.1.0",
+	"version": "0.0.2",
 	"description": "A workout creator for mrc or erg file formats",
 	"license": "MIT",
 	"repository": "stefanfortuin/workout-creator",
-	"main": "index.js",
+	"main": "dist/index.js",
+	"files": ["dist/*"],
+	"scripts":{
+		"build": "babel -s inline -d dist src"
+	},
+	"babel": {
+		"presets": ["es2015"]
+	},
 	"keywords": [
 		"workout",
 		"mrc",
 		"erg",
 		"wahoo",
 		"plan"
-	]
-
+	],
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-core": "^6.26.3",
+		"babel-preset-es2015": "^6.24.1"
+	}
 }
