@@ -58,6 +58,11 @@ workout.addMultipleSegments(segments);
 ## Saving the file
 Right now it only saves the whole workout to a string
 
+```js
+workout.toString();
+```
+
+
 ```
 [COURSE HEADER]
 VERSION = 2
