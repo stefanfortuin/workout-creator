@@ -25,7 +25,13 @@ class Workout{
 	}
 
 	addSegment(segment){
-		this._segments.push(segment)
+		let lastSegment = this._segments[this._segments.length - 1];
+
+		let start;
+		(!lastSegment)? start = 0 : start = lastSegment.endTime;
+		segment.start = start;
+
+		this._segments.push(segment);
 	}
 
 	addMultipleSegments(segments){
