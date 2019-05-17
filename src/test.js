@@ -20,6 +20,17 @@ let segments = [
 	new SEGMENT(23, 50),
 ]
 
+
+
 workout.addMultipleSegments(segments);
-console.log(workout.totalSeconds())
+console.log(workout.segments);
+
+let segment5 = segments[5];
+console.log(segment5.startEffort)
+console.log(segment5.endEffort);
+workout.deleteSegment(segment5);
+
+console.log(workout.segments);
+
+console.log(workout.totalSeconds)
 console.log(workout.toString());

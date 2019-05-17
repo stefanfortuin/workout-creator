@@ -1,7 +1,8 @@
 class Segment{
-	constructor(duration, amount){
+	constructor(duration, start_effort, end_effort){
 		this._duration = duration; //time in seconds
-		this._amount = amount; //amount of percentage above ftp
+		this._startEffort = start_effort; //amount of percentage above ftp
+		this._endEffort = (!end_effort) ? start_effort : end_effort;
 	}
 
 	get duration(){
@@ -10,6 +11,18 @@ class Segment{
 
 	get endTime(){
 		return this._start + this._duration;
+	}
+
+	get effortDifference(){
+		return this._endEffort - this._startEffort;
+	}
+
+	get startEffort(){
+		return this._startEffort;
+	}
+
+	get endEffort(){
+		return this._endEffort;
 	}
 
 	set start(seconds){
@@ -34,8 +47,8 @@ class Segment{
 
 	toString(){
 		let output = "";
-		output += this.start_format() + " " + this._amount + "\n";
-		output += this.end_format() + " " + this._amount + "\n";
+		output += this.start_format() + " " + this._startEffort + "\n";
+		output += this.end_format() + " " + this._endEffort + "\n";
 		return output;
 	}
 }

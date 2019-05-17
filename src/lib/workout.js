@@ -18,10 +18,14 @@ class Workout{
 		this._segments = [];
 	}
 
-	totalSeconds(){
+	get totalSeconds(){
 		return this._segments.reduce((t, s) => {
 			return t += s.duration;
 		}, 0)
+	}
+
+	get segments(){
+		return this._segments;
 	}
 
 	addSegment(segment){
@@ -41,7 +45,10 @@ class Workout{
 	}
 
 	deleteSegment(segment){
-		this._segments.remove(segment);
+		let segmentIndex = this._segments.indexOf(segment);
+		if (segmentIndex == -1) return;
+
+		this._segments.splice(segmentIndex, 1);
 	}
 
 	findSegment(segment){
