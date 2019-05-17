@@ -9,7 +9,7 @@ class Workout{
 		this._version = (options.version) ? options.version : 2;
 		this._units = "ENGLISH";
 		this._description = options.description;
-		this._name = options.name;
+		this._name = options.name + "." + options.type;
 
 		this._data_columns = (this._type == "mrc") 
 		? "MINUTES PERCENT \n" 
@@ -28,6 +28,10 @@ class Workout{
 		return this._segments;
 	}
 
+	get fileName(){
+		return this._name;
+	}
+
 	addSegment(segment){
 		let lastSegment = this._segments[this._segments.length - 1];
 
@@ -36,6 +40,7 @@ class Workout{
 		segment.start = start;
 
 		this._segments.push(segment);
+		this.updateStartTimes();
 	}
 
 	addMultipleSegments(segments){
@@ -46,13 +51,36 @@ class Workout{
 
 	deleteSegment(segment){
 		let segmentIndex = this._segments.indexOf(segment);
-		if (segmentIndex == -1) return;
+		if (segmentIndex == -1) {
+			console.error("Could not find segment");
+			return
+		}
 
 		this._segments.splice(segmentIndex, 1);
+		this.updateStartTimes();
 	}
 
 	findSegment(segment){
 		return this._segments.find(segment);
+	}
+
+	updateStartTimes(){
+		for (let i = 0; i < this._segments.length; i++) {
+			const current = this._segments[i];
+			const previous = this._segments[i-1];
+
+			let start = (!previous || i == 0)
+						? 0 
+						: previous.endTime;
+
+			current.start = start;
+		}
+	}
+
+	getDownloadUrl(){
+		let blob = new Blob([this.toString()], {type: "text/plain"});
+		let url = URL.createObjectURL(blob);
+		return url;
 	}
 
 	toString(){
@@ -74,14 +102,6 @@ class Workout{
 		let output = "";
 		for (let i = 0; i < this._segments.length; i++) {
 			const current = this._segments[i];
-			const previous = this._segments[i-1];
-			let start;
-
-			(!previous || i == 0)
-			? start = 0 
-			: start = previous.endTime;
-
-			current.start = start;
 			output += current.toString();
 		}
 		return output;
