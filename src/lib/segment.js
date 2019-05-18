@@ -9,6 +9,10 @@ class Segment{
 		return this._duration;
 	}
 
+	set duration(seconds){
+		this._duration = seconds;
+	}
+
 	get endTime(){
 		return this._start + this._duration;
 	}
@@ -23,6 +27,18 @@ class Segment{
 
 	get endEffort(){
 		return this._endEffort;
+	}
+
+	set startEffort(effort){
+		if(effort > 200) effort = 200;
+
+		this._startEffort = effort;
+	}
+
+	set endEffort(effort){
+		if(effort > 200) effort = 200;
+
+		this._endEffort = effort;
 	}
 
 	set start(seconds){
