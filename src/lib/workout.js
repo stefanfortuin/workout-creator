@@ -15,6 +15,8 @@ class Workout{
 		? "MINUTES PERCENT \n" 
 		: "MINUTES WATTS \n";
 
+		this._tags = [];
+
 		this._segments = [];
 	}
 
@@ -30,6 +32,29 @@ class Workout{
 
 	get fileName(){
 		return this._name;
+	}
+
+	get tags(){
+		return this._tags;
+	}
+
+	removeTag(tag){
+		let tagIndex = this._tags.indexOf(tag);
+		this._tags.splice(tagIndex, 1);
+	}
+
+	addTags(tags){
+		if (Array.isArray(tags)){
+			this._tags = this._tags.concat(tags);
+		}
+		else{
+			let tagArray = tags.split(" ");
+			this._tags = this._tags.concat(tagArray);
+		}
+	}
+
+	addTag(tag){
+		this._tags.push(tag);
 	}
 
 	addSegment(segment){

@@ -1,6 +1,6 @@
 {
 	"name": "@stefanfortuin/workout-creator",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"description": "A workout creator for mrc or erg file formats",
 	"license": "MIT",
 	"repository": "stefanfortuin/workout-creator",
