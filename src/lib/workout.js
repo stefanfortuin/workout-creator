@@ -1,98 +1,57 @@
 class Workout{
 	constructor(options){
-		if (!options.type) {
-			console.log("Please specifiy a type, mrc/erg");
-			return;
-		}
+		this.type = options.type;
+		this.version = (options.version) ? options.version : 2;
+		this.units = "ENGLISH";
+		this.description = options.description;
+		this.name = options.name;
 
-		this._type = options.type;
-		this._version = (options.version) ? options.version : 2;
-		this._units = "ENGLISH";
-		this._description = options.description;
-		this._name = options.name + "." + options.type;
-
-		this._data_columns = (this._type == "mrc") 
+		this.data_columns = (this.type == "mrc") 
 		? "MINUTES PERCENT \n" 
 		: "MINUTES WATTS \n";
 
-		this._tags = [];
-
-		this._segments = [];
+		this.tags = [];
+		this.segments = [];
 	}
 
 	get totalSeconds(){
-		return this._segments.reduce((t, s) => {
+		return this.segments.reduce((t, s) => {
 			return t += s.duration;
 		}, 0)
 	}
 
-	get segments(){
-		return this._segments;
-	}
-
-	get fileName(){
-		return this._name;
-	}
-
-	get tags(){
-		return this._tags;
-	}
-
-	removeTag(tag){
-		let tagIndex = this._tags.indexOf(tag);
-		this._tags.splice(tagIndex, 1);
-	}
-
-	addTags(tags){
-		if (Array.isArray(tags)){
-			this._tags = this._tags.concat(tags);
-		}
-		else{
-			let tagArray = tags.split(" ");
-			this._tags = this._tags.concat(tagArray);
-		}
-	}
-
-	addTag(tag){
-		this._tags.push(tag);
-	}
-
 	addSegment(segment){
-		let lastSegment = this._segments[this._segments.length - 1];
+		let lastSegment = this.segments[this.segments.length - 1];
 
 		let start;
 		(!lastSegment)? start = 0 : start = lastSegment.endTime;
 		segment.start = start;
 
-		this._segments.push(segment);
+		this.segments.push(segment);
 		this.updateStartTimes();
 	}
 
-	addMultipleSegments(segments){
+	addSegments(segments){
 		for (let i = 0; i < segments.length; i++) {
 			this.addSegment(segments[i]);
 		}
 	}
 
 	deleteSegment(segment){
-		let segmentIndex = this._segments.indexOf(segment);
+		let segmentIndex = this.segments.indexOf(segment);
 		if (segmentIndex == -1) {
 			console.error("Could not find segment");
 			return
 		}
 
-		this._segments.splice(segmentIndex, 1);
+		this.segments.splice(segmentIndex, 1);
 		this.updateStartTimes();
 	}
 
-	findSegment(segment){
-		return this._segments.find(segment);
-	}
-
 	updateStartTimes(){
-		for (let i = 0; i < this._segments.length; i++) {
-			const current = this._segments[i];
-			const previous = this._segments[i-1];
+		for (let i = 0; i < this.segments.length; i++) {
+			const current = this.segments[i];
+			const previous = this.segments[i-1];
 
 			let start = (!previous || i == 0)
 						? 0 
@@ -102,20 +61,24 @@ class Workout{
 		}
 	}
 
-	getDownloadUrl(){
-		let blob = new Blob([this.toString()], {type: "text/plain"});
+	get url(){
+		let blob = new Blob([this.toString(type)], {type: "text/plain"});
 		let url = URL.createObjectURL(blob);
 		return url;
 	}
 
-	toString(){
+	save(type){
 		let output = "";
 		output += "[COURSE HEADER] \n";
 		output += "UNITS=ENGLISH \n";
-		output += "VERSION=" + this._version + "\n";
-		output += "DESCRIPTION=" + this._description + "\n";
-		output += "FILE NAME=" + this._name + "\n";
-		output += this._data_columns;
+		output += "VERSION=2\n";
+		output += "DESCRIPTION=" + this.description + "\n";
+		output += "FILE NAME=" + this.name + "\n";
+
+		output += (type == "mrc") 
+		? "MINUTES PERCENT \n" 
+		: "MINUTES WATTS \n";
+
 		output += "[END COURSE HEADER] \n";
 		output += "[COURSE DATA] \n";
 		output += this.segmentsToString();
@@ -125,10 +88,7 @@ class Workout{
 
 	segmentsToString(){
 		let output = "";
-		for (let i = 0; i < this._segments.length; i++) {
-			const current = this._segments[i];
-			output += current.toString();
-		}
+		this.segments.forEach((s) => output += s.toString())
 		return output;
 	}
 }

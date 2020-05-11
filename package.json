@@ -1,6 +1,6 @@
 {
 	"name": "@stefanfortuin/workout-creator",
-	"version": "0.0.11",
+	"version": "0.0.15",
 	"description": "A workout creator for mrc or erg file formats",
 	"license": "MIT",
 	"repository": "stefanfortuin/workout-creator",
@@ -9,7 +9,8 @@
 		"dist/*"
 	],
 	"scripts": {
-		"build": "babel -s inline -d dist src"
+		"build": "babel -s inline -d dist src",
+		"test": "npm run build && cd dist && node test.js"
 	},
 	"keywords": [
 		"workout",

@@ -20,29 +20,13 @@ let segments = [
 	new SEGMENT(23, 50),
 ]
 
-
-
-workout.addMultipleSegments(segments);
+workout.addSegments(segments);
 console.log(workout.segments);
 
 let segment5 = segments[5];
-console.log(segment5.startEffort)
-console.log(segment5.endEffort);
+console.log(segment5.effort)
 workout.deleteSegment(segment5);
-
 console.log(workout.segments);
 
-workout.addTag("sprint");
-workout.addTag("hill");
-workout.addTag("hard");
-console.log(workout.tags);
-workout.removeTag("hill");
-console.log(workout.tags);
-
-workout.addTags(["new", "fresh", "ftp", "heartrate"]);
-console.log(workout.tags);
-workout.addTags("cycling fast hit long");
-console.log(workout.tags);
-
 console.log(workout.totalSeconds)
-console.log(workout.toString());
+console.log(workout.save());

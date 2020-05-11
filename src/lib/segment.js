@@ -1,56 +1,20 @@
 class Segment{
-	constructor(duration, start_effort, end_effort){
-		this._duration = duration; //time in seconds
-		this._startEffort = start_effort; //amount of percentage above ftp
-		this._endEffort = (!end_effort) ? start_effort : end_effort;
-	}
-
-	get duration(){
-		return this._duration;
-	}
-
-	set duration(seconds){
-		this._duration = seconds;
+	constructor(duration, effort){
+		this.duration = duration; //time in seconds
+		this.effort = effort; //amount of percentage above ftp
+		this.start = 0;
 	}
 
 	get endTime(){
-		return this._start + this._duration;
-	}
-
-	get effortDifference(){
-		return this._endEffort - this._startEffort;
-	}
-
-	get startEffort(){
-		return this._startEffort;
-	}
-
-	get endEffort(){
-		return this._endEffort;
-	}
-
-	set startEffort(effort){
-		if(effort > 200) effort = 200;
-
-		this._startEffort = effort;
-	}
-
-	set endEffort(effort){
-		if(effort > 200) effort = 200;
-
-		this._endEffort = effort;
-	}
-
-	set start(seconds){
-		this._start = seconds;
+		return this.start + this.duration;
 	}
 
 	start_format(){
-		return this.seconds_to_file_format(this._start);
+		return this.seconds_to_file_format(this.start);
 	}
 
 	end_format(){
-		let end_time = this._start + this._duration;
+		let end_time = this.start + this.duration;
 		return this.seconds_to_file_format(end_time);
 	}
 
@@ -63,8 +27,8 @@ class Segment{
 
 	toString(){
 		let output = "";
-		output += this.start_format() + " " + this._startEffort + "\n";
-		output += this.end_format() + " " + this._endEffort + "\n";
+		output += this.start_format() + " " + this.effort + "\n";
+		output += this.end_format() + " " + this.effort + "\n";
 		return output;
 	}
 }
