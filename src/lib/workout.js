@@ -1,73 +1,57 @@
-class Workout{
-	constructor(options){
-		this.type = options.type;
-		this.version = (options.version) ? options.version : 2;
-		this.units = "ENGLISH";
-		this.description = options.description;
-		this.name = options.name;
-
-		this.data_columns = (this.type == "mrc") 
-		? "MINUTES PERCENT \n" 
-		: "MINUTES WATTS \n";
-
-		this.tags = [];
-		this.segments = [];
+class Workout {
+	constructor(options) {
+		this.description = '';
+		this.name = '';
+		this.intervals = [];
 	}
 
-	get totalSeconds(){
-		return this.segments.reduce((t, s) => {
+	get totalSeconds() {
+		return this.intervals.reduce((t, s) => {
 			return t += s.duration;
 		}, 0)
 	}
 
-	addSegment(segment){
-		let lastSegment = this.segments[this.segments.length - 1];
+	addInterval(interval) {
+		let lastinterval = this.intervals[this.intervals.length - 1];
 
-		let start;
-		(!lastSegment)? start = 0 : start = lastSegment.endTime;
-		segment.start = start;
+		interval.start = (!lastinterval) ? 0 : lastinterval.endTime;
 
-		this.segments.push(segment);
+		this.intervals.push(interval);
 		this.updateStartTimes();
 	}
 
-	addSegments(segments){
-		for (let i = 0; i < segments.length; i++) {
-			this.addSegment(segments[i]);
-		}
+	addIntervals(intervals) {
+		intervals.forEach(s => this.addInterval(s));
 	}
 
-	deleteSegment(segment){
-		let segmentIndex = this.segments.indexOf(segment);
-		if (segmentIndex == -1) {
-			console.error("Could not find segment");
-			return
-		}
+	deleteInterval(interval) {
+		let intervalIndex = this.intervals.indexOf(interval);
+		if (intervalIndex == -1) return;
 
-		this.segments.splice(segmentIndex, 1);
+		this.intervals.splice(intervalIndex, 1);
 		this.updateStartTimes();
 	}
 
-	updateStartTimes(){
-		for (let i = 0; i < this.segments.length; i++) {
-			const current = this.segments[i];
-			const previous = this.segments[i-1];
+	updateStartTimes() {
+		for (let i = 0; i < this.intervals.length; i++) {
+			const cur = this.intervals[i],
+				prev = this.intervals[i - 1];
 
-			let start = (!previous || i == 0)
-						? 0 
-						: previous.endTime;
-
-			current.start = start;
+			cur.start = (!prev || i == 0) 
+			? 0 
+			:prev.endTime;
 		}
 	}
 
-	get url(){
-		let blob = new Blob([this.toString(type)], {type: "text/plain"});
+	get url() {
+		let blob = new Blob([this.save(type)], {
+			type: "text/plain"
+		});
 		let url = URL.createObjectURL(blob);
 		return url;
 	}
 
-	save(type){
+	save(type) {
 		let output = "";
 		output += "[COURSE HEADER] \n";
 		output += "UNITS=ENGLISH \n";
@@ -75,20 +59,20 @@ class Workout{
 		output += "DESCRIPTION=" + this.description + "\n";
 		output += "FILE NAME=" + this.name + "\n";
 
-		output += (type == "mrc") 
-		? "MINUTES PERCENT \n" 
-		: "MINUTES WATTS \n";
+		output += (type == "mrc") ?
+			"MINUTES PERCENT \n" :
+			"MINUTES WATTS \n";
 
 		output += "[END COURSE HEADER] \n";
 		output += "[COURSE DATA] \n";
-		output += this.segmentsToString();
+		output += this.intervalsToString();
 		output += "[END COURSE DATA]"
 		return output;
 	}
 
-	segmentsToString(){
+	intervalsToString() {
 		let output = "";
-		this.segments.forEach((s) => output += s.toString())
+		this.intervals.forEach((s) => output += s.toString())
 		return output;
 	}
 }

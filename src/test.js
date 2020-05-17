@@ -1,32 +1,26 @@
-import SEGMENT from './lib/segment';
+import INTERVAL from './lib/interval';
 import WORKOUT from './lib/workout';
 
-let options = {
-	type: "mrc",
-	name: "test workout",
-	description: "Really powerful workout on the bike",
-}
-
-let workout = new WORKOUT(options);
-let segments = [
-	new SEGMENT(46, 50),
-	new SEGMENT(10, 100),
-	new SEGMENT(98, 50),
-	new SEGMENT(32, 100),
-	new SEGMENT(90, 50),
-	new SEGMENT(111, 150),
-	new SEGMENT(76, 50),
-	new SEGMENT(85, 80),
-	new SEGMENT(23, 50),
+let workout = new WORKOUT();
+let intervals = [
+	new INTERVAL(46, 50),
+	new INTERVAL(10, 100),
+	new INTERVAL(98, 50),
+	new INTERVAL(32, 100),
+	new INTERVAL(90, 50),
+	new INTERVAL(111, 150),
+	new INTERVAL(76, 50),
+	new INTERVAL(85, 80),
+	new INTERVAL(23, 50),
 ]
 
-workout.addSegments(segments);
-console.log(workout.segments);
+workout.addIntervals(intervals);
+console.log(workout.intervals);
 
-let segment5 = segments[5];
-console.log(segment5.effort)
-workout.deleteSegment(segment5);
-console.log(workout.segments);
+let interval5 = intervals[5];
+console.log(interval5.effort)
+workout.deleteInterval(interval5);
+console.log(workout.intervals);
 
 console.log(workout.totalSeconds)
-console.log(workout.save());
+console.log(workout.save('mrc'));

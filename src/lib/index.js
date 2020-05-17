@@ -1,7 +1,7 @@
-import Segment from './segment';
+import Interval from './interval';
 import Workout from './workout';
 
 export {
-	Segment,
+	Interval,
 	Workout
 }
