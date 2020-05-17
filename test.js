@@ -1,5 +1,5 @@
-import INTERVAL from './lib/interval';
-import WORKOUT from './lib/workout';
+import INTERVAL from './src/lib/interval';
+import WORKOUT from './src/lib/workout';
 
 let workout = new WORKOUT();
 let intervals = [
