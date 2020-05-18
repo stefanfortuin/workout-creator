@@ -5,11 +5,12 @@
 	"license": "MIT",
 	"repository": "stefanfortuin/workout-creator",
 	"main": "dist/index.js",
+	"type": "module",
 	"files": [
 		"dist/*"
 	],
 	"scripts": {
-		"build": "babel -s inline -d dist src",
+		"build": "babel -d dist src",
 		"test": "npm run build"
 	},
 	"keywords": [
