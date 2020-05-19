@@ -9,12 +9,12 @@ class Interval {
 		return this.start + this.duration;
 	}
 
-	seconds_to_file_format(s) {
+	format_sec(s) {
 		return (s - (s %= 60)) / 60 + (9 < s ? '.' : '.0') + Math.round(s * 1.666667);
 	}
 
 	toString() {
-		return `${this.seconds_to_file_format(this.start)} ${this.effort}\n${this.seconds_to_file_format(this.end)} ${this.effort}\n`;
+		return `${this.format_sec(this.start)} ${this.effort}\n${this.format_sec(this.end)} ${this.effort}\n`;
 	}
 }
 export default Interval;

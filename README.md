@@ -8,58 +8,55 @@ This will create a empty workout
 ```js
 import { Workout } from "@stefanfortuin/workout-creator"
 
-let options = {
-    type: "mrc",
-    name: "Your workout name",
-    description: "Your workout description"
-}
-
-let workout = new Workout(options);
+let workout = new Workout();
 ```
 
-## Creating a segment
-A Segment needs to have duration of the segment and a percentage of the workload you are going to do
+## Creating an interval
+An interval needs to have duration and a percentage of the workload you are going to do
 
-A segment start and en time will be converted to "minutes.seconds" where the seconds parameter is a total of 100 instead of 60
+An interval's start and end time will be converted to "minutes.seconds" where the seconds parameter is a total of 100 instead of 60
 
 ```js
-  import { Segment } from "@stefanfortuin/workout-creator"
+  import { Interval } from "@stefanfortuin/workout-creator"
   let duration = 120; // duration in seconds
   let percentage = 70;
-  let segment = new Segment(duration, percentage)
+  let interval = new Interval(duration, percentage)
 ```
 
 
-## Adding segments to a Workout
+## Adding intervals to a Workout
 
-### One Segment
+### One interval
 ```js
-import { Segment } from "@stefanfortuin/workout-creator"
+import { Interval } from "@stefanfortuin/workout-creator"
 
-let segment = new Segment(120, 80), // 2 min duration on 80%
+let interval = new Interval(120, 80), // 2 min duration on 80%
 
-workout.addSegment(segment);
+workout.addInterval(interval);
 ```
 
-### Multiple segments
+### Multiple intervals
 ```js
-import { Segment } from "@stefanfortuin/workout-creator"
+import { Interval } from "@stefanfortuin/workout-creator"
 
-let segments = [
-    new Segment(120, 80), // 2 min duration on 80%
-    new Segment(10, 120), // 10 sec duration on 120%
-    new Segment(120, 80), // 2 min duration on 80%
+let intervals = [
+    new Interval(120, 80), // 2 min duration on 80%
+    new Interval(10, 120), // 10 sec duration on 120%
+    new Interval(120, 80), // 2 min duration on 80%
 ]
 
-workout.addMultipleSegments(segments);
+workout.addIntervals(intervals);
 ```
 
 
 ## Saving the file
-Right now it only saves the whole workout to a string
+Right now it only saves the whole workout to a string.
+You can put the string in a blob to download the file from the web or save it in to a file.
+For now only 'mrc' and 'erg' file formats are supported
 
 ```js
-workout.toString();
+workout.save('mrc');
+workout.save('erg');
 ```
 
 

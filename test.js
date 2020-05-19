@@ -6,7 +6,7 @@ let intervals = [
 	new INTERVAL(46, 50),
 	new INTERVAL(10, 100),
 	new INTERVAL(98, 50),
-	new INTERVAL(28, 100),
+	new INTERVAL(30, 100),
 	new INTERVAL(90, 50),
 	new INTERVAL(111, 150),
 	new INTERVAL(76, 50),
@@ -24,5 +24,5 @@ workout.deleteInterval(interval5);
 console.log(workout.intervals);
 console.log('deleted', workout.intervals.length);
 
-console.log(workout.totalSeconds)
+console.log(workout.duration)
 console.log(workout.save('mrc'));
