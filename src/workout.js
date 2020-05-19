@@ -9,21 +9,19 @@ class Workout {
 		return this.intervals.reduce((t, s) => +t + +s.duration, 0)
 	}
 
-	addInterval(interval) {
-		this.intervals.push(interval);
-		this.updateStartTimes();
+	add(data) {
+		(Array.isArray(data))
+		? data.forEach(x => this.intervals.push(x))
+		: this.intervals.push(data)
+		this.update();
 	}
 
-	addIntervals(intervals) {
-		intervals.forEach(s => this.addInterval(s));
-	}
-
-	deleteInterval(interval) {
+	delete(interval) {
 		this.intervals = this.intervals.filter(i => i != interval)
-		this.updateStartTimes();
+		this.update();
 	}
 
-	updateStartTimes() {
+	update() {
 		this.intervals.forEach((cur, i) => {
 			const prev = this.intervals[i-1];
 			cur.start = (!prev || i == 0) 
@@ -33,15 +31,15 @@ class Workout {
 	}
 
 	save(type) {
-		let output = "[COURSE HEADER]\nUNITS=ENGLISH\nVERSION=2\n";
-		output += `DESCRIPTION=${this.description}\n`;
-		output += `FILE NAME=${this.name}\n`;
-		output += `MINUTES ${(type == 'mrc') ? 'PERCENT' : 'WATTS'}\n`;
-		output += "[END COURSE HEADER]\n";
-		output += "[COURSE DATA]\n";
-		output += this.intervals.map(s => s.toString()).join('');
-		output += "[END COURSE DATA]"
-		return output;
+		let out = "[COURSE HEADER]\nUNITS=ENGLISH\nVERSION=2\n";
+		out += `DESCRIPTION=${this.description}\n`;
+		out += `FILE NAME=${this.name}\n`;
+		out += `MINUTES ${(type == 'mrc') ? 'PERCENT' : 'WATTS'}\n`;
+		out += "[END COURSE HEADER]\n";
+		out += "[COURSE DATA]\n";
+		out += this.intervals.map(s => s.toString()).join('');
+		out += "[END COURSE DATA]"
+		return out;
 	}
 }
 export default Workout;

@@ -3,5 +3,5 @@ import Workout from './workout';
 
 export {
 	Interval,
-	Workout
+	Workout,
 }

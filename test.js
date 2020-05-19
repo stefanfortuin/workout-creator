@@ -1,26 +1,26 @@
-import INTERVAL from './src/interval.js';
-import WORKOUT from './src/workout.js';
+import Interval from './src/interval.js';
+import Workout from './src/workout.js';
 
-let workout = new WORKOUT();
+let workout = new Workout();
 let intervals = [
-	new INTERVAL(46, 50),
-	new INTERVAL(10, 100),
-	new INTERVAL(98, 50),
-	new INTERVAL(30, 100),
-	new INTERVAL(90, 50),
-	new INTERVAL(111, 150),
-	new INTERVAL(76, 50),
-	new INTERVAL(85, 80),
-	new INTERVAL(23, 50),
+	new Interval(46, 50),
+	new Interval(10, 100),
+	new Interval(98, 50),
+	new Interval(30, 100),
+	new Interval(90, 50),
+	new Interval(111, 150),
+	new Interval(76, 50),
+	new Interval(85, 80),
+	new Interval(23, 50),
 ]
 
-workout.addIntervals(intervals);
+workout.add(intervals);
 console.log(workout.intervals);
 
 let interval5 = intervals[5];
 console.log(interval5.effort)
 console.log("now deleting", workout.intervals.length);
-workout.deleteInterval(interval5);
+workout.delete(interval5);
 console.log(workout.intervals);
 console.log('deleted', workout.intervals.length);
 
